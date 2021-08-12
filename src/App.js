@@ -1,23 +1,25 @@
-import logo from './logo.svg';
+import React,{useState,useEffect} from "react"
 import './App.css';
 
 function App() {
-  return (
+  const[state,setState] = useState({
+    count:0,
+    time:new Date()
+  })
+  useEffect(() => {
+    const updateCount = () => setState({
+      count:state.count+1,
+      time:new Date()
+    })
+    window.addEventListener("click",updateCount)
+    return ()=>{
+      window.removeEventListener("click",updateCount)
+    }
+  })
+    return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h2>{state.count}</h2>
+      <h1>{state.time.toLocaleTimeString()}</h1>
     </div>
   );
 }
